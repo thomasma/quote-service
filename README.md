@@ -3,6 +3,7 @@ Spring Boot App. Retrieve random quote service RESTful service.
 # Pre-Requsites (do this only once)
 ## Run a local Eureka Service Registry
 Retrieve a copy of the Eureka server project and run that localy to stand up a local instance.
+
     git clone https://github.com/thomasma/eureka-service-registry
     mvn clean spring-boot:run
     http://localhost:8761
@@ -10,6 +11,7 @@ Retrieve a copy of the Eureka server project and run that localy to stand up a l
 
 ## Run a local Hysterix Dashboard
 Retrieve a copy of the hystrix-dashboard sample server project and run that localy to stand up a local server.
+
     git clone https://github.com/spring-cloud-samples/hystrix-dashboard.git
     mvn clean spring-boot:run
     From your browser go to http://localhost:7979/
