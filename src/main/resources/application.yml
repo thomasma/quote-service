@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: quote-service
+    
+---    
+server:
+  port: 7070
+
+---
+# HTTP encoding
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+        
+---
+# INTERNATIONALIZATION (MessageSourceAutoConfiguration)
+spring:
+  messages:
+    basename: messages
+    cache-seconds: -1
+    encoding: UTF-8
+
+logging:
+  file: quote-service.log
+  level:     
+    com.aver: DEBUG
+  path: /Users/mathew/temp
+    
+---
+endpoints:
+  health:
+    enabled: true
+    sensitive: false
+  logfile:
+    enabled: true
+    path: /logfile
+    sensitive: false
+  metrics:
+    enabled: true
+    sensitive: false
+  info:
+    enabled: true
+    sensitive: false
+  sensitive: false
+    
+---
+turbine:
+  stream:
+    destination: metricqueue
+    port: 8989
+---
+health:
+  hystrix:
+    enabled: true
+
+---
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+       
