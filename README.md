@@ -18,10 +18,12 @@ Retrieve a copy of the hystrix-dashboard sample server project and run that loca
 
 ## To run the app
 Download and run Mongodb. 
+
     mongod --dbpath ~/data/mongodata/
 
 # Run the Application
 Run this API application using
+
     mvn spring-boot:run
 
 ## Interact with app using curl
