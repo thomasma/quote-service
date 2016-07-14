@@ -28,7 +28,7 @@ Run this API application using
 
 ## Interact with app using curl
 ### Get random quote
-    curl -XGET  http://localhost:8080/quotes/
+    curl -XGET  http://localhost:7070/quotes/
 
 ## Actuator endpoint
     curl http://localhost:7070/health 

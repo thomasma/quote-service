@@ -21,12 +21,13 @@ public class QuoteServiceImpl implements QuoteService {
      */
     @HystrixCommand(fallbackMethod = "fallbackQuoteService")
     public Quote getRandomQuote() {
+        LOGGER.info("Getting a random quote.");
         RestTemplate restTemplate = new RestTemplate();
         Quote quote = restTemplate
                 .getForObject(
                         "http://api.icndb.com/jokes/random?firstName=Chuck&amp;lastName=Doe",
                         Quote.class);
-        LOGGER.info(quote.toString());
+        LOGGER.debug(quote.toString());
         return quote;
     }
 

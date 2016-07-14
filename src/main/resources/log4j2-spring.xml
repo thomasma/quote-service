@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="10">
+	<Properties>
+		<Property name="log-path">applogs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>
+					[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+				>
+			</PatternLayout>
+		</Console>
+		<File name="AppFileAppender" fileName="${log-path}/quote-service.log">
+			<PatternLayout>
+				<pattern>
+					[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+		</File>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.springframework.web" level="info" additivity="false">
+			<AppenderRef ref="AppFileAppender" />
+			<AppenderRef ref="ConsoleAppender" />
+		</Logger>
+		<Logger name="com.aver" level="info"
+			additivity="false">
+			<AppenderRef ref="AppFileAppender" />
+			<AppenderRef ref="ConsoleAppender" />
+		</Logger>
+		<Root>
+			<AppenderRef ref="ConsoleAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
