@@ -7,14 +7,14 @@
 	<version>0.1.0</version>
 
 	<properties>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-starter-parent</artifactId>
-		<version>Brixton.SR3</version>
+		<version>Camden.SR1</version>
 	</parent>
 
 	<dependencies>

@@ -23,8 +23,8 @@ spring:
     cache-seconds: -1
     encoding: UTF-8
 
-logging:
-  config: /Users/mathew/temp/log4j2-spring.xml
+#logging:
+#  config: /Users/mathew/temp/log4j2-spring.xml
 #  file: quote-service.log 
 #  level:     
 #    com.aver: DEBUG
