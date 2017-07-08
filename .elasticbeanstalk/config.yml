@@ -1,0 +1,19 @@
+branch-defaults:
+  master:
+    environment: quote-service-dev
+    group_suffix: null
+deploy:
+  artifact: target/quote-services-0.1.0.jar
+global:
+  application_name: quote-service
+  branch: null
+  default_ec2_keyname: id_rsa
+  default_platform: Java 8
+  default_region: us-east-1
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application

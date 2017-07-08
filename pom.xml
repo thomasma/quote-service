@@ -5,6 +5,7 @@
 	<groupId>com.aver</groupId>
 	<artifactId>quote-services</artifactId>
 	<version>0.1.0</version>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -12,10 +13,23 @@
 	</properties>
 
 	<parent>
-		<groupId>org.springframework.cloud</groupId>
-		<artifactId>spring-cloud-starter-parent</artifactId>
-		<version>Camden.SR1</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.2.RELEASE</version>
 	</parent>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Camden.SR6</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 
@@ -75,6 +89,13 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -83,6 +104,57 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>.ebextensions</directory>
+							<targetPath>.ebextensions</targetPath>
+							<filtering>true</filtering>
+						</resource>
+						<resource>
+							<directory>.elasticbeanstalk</directory>
+							<targetPath>.elasticbeanstalk</targetPath>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>prepare</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<unzip
+									src="${project.build.directory}/${project.build.finalName}.jar"
+									dest="${project.build.directory}/${project.build.finalName}" />
+								<copy todir="${project.build.directory}/${project.build.finalName}/"
+									overwrite="false">
+									<fileset dir="./" includes=".ebextensions/**" />
+								</copy>
+								<copy todir="${project.build.directory}/${project.build.finalName}/"
+									overwrite="false">
+									<fileset dir="./" includes=".elasticbeanstalk/**" />
+								</copy>
+								<zip compress="false"
+									destfile="${project.build.directory}/${project.build.finalName}.jar"
+									basedir="${project.build.directory}/${project.build.finalName}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

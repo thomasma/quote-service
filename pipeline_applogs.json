@@ -1,0 +1,11 @@
+PUT /_ingest/pipeline/applogs-pipeline
+{
+  "processors": [
+    {
+      "grok": {
+        "field": "message",
+        "patterns": ["%{LOGLEVEL:loglevel} %{TIMESTAMP_ISO8601:datetime} %{NOTSPACE:thread} %{WORD:javaclass} %{GREEDYDATA:msg}"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+PUT /_ingest/pipeline/accesslog-pipeline
+{
+  "processors": [
+    {
+      "grok": {
+        "field": "message",
+        "patterns": ["%{COMBINEDAPACHELOG}"]
+      }
+    }
+  ]
+}
