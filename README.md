@@ -16,7 +16,7 @@ Retrieve a copy of the hystrix-dashboard sample server project and run that loca
     mvn clean spring-boot:run
     From your browser go to http://localhost:7979/
 
-## To run the app 
+## Run the database
 Download and run Mongodb. 
 
     mongod --dbpath ~/data/mongodata/
