@@ -9,14 +9,14 @@ Retrieve a copy of the Eureka server project and run that localy to stand up a l
     http://localhost:8761
     http://localhost:8761/eureka/apps (XML feed from Eureka)
 
-## Run a local Hysterix Dashboard (do this only once and only if interested in running this sample using Spring Cloud...otherwise ignore this section)
+## Run a local Hysterix Dashboard 
 Retrieve a copy of the hystrix-dashboard sample server project and run that localy to stand up a local server.
 
     git clone https://github.com/spring-cloud-samples/hystrix-dashboard.git
     mvn clean spring-boot:run
     From your browser go to http://localhost:7979/
 
-## To run the app (do this only once and only if interested in running this sample using Spring Cloud...otherwise ignore this section)
+## To run the app 
 Download and run Mongodb. 
 
     mongod --dbpath ~/data/mongodata/
