@@ -1,0 +1,11 @@
+PUT /_ingest/pipeline/json-pipeline
+{
+  "processors": [
+    {
+      "json" : {
+          "field" : "message",
+          "target_field" : "json_target"
+       }
+    }
+  ]
+}
