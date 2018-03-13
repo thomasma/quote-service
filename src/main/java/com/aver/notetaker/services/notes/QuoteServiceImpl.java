@@ -2,6 +2,7 @@ package com.aver.notetaker.services.notes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,13 +22,18 @@ public class QuoteServiceImpl implements QuoteService {
      */
     @HystrixCommand(fallbackMethod = "fallbackQuoteService")
     public Quote getRandomQuote() {
-        LOGGER.info("Getting a random quote.");
+        MDC.put("customfield", new Long(System.currentTimeMillis()).toString());
+        LOGGER.info("Getting a random quote");
+
+        // put something into the context just for testing logback json
+        // additions of custom fields
         RestTemplate restTemplate = new RestTemplate();
         Quote quote = restTemplate
                 .getForObject(
                         "http://api.icndb.com/jokes/random?firstName=Chuck&amp;lastName=Doe",
                         Quote.class);
         LOGGER.debug(quote.toString());
+        MDC.clear();
         return quote;
     }
 

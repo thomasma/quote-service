@@ -1,14 +1,45 @@
 <configuration>
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+        <!-- Pull in the Spring Boot App Name so that every log line will have the service name. -->
+	<springProperty scope="context" name="springAppName" source="spring.application.name" />
+
+
+        <!-- Route logs to console.-->
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
-			<includeMdcKeyName>customfield</includeMdcKeyName>
-			<includeMdcKeyName>key2ToInclude</includeMdcKeyName>
+                <!-- JSON format with specific fields included.-->
+		<encoder
+			class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<mdc />
+				<logLevel>
+					<fieldName>logLevel</fieldName>
+				</logLevel>
+				<message />
+				<logstashMarkers />
+				<stackTrace>
+					<fieldName>stackTrace</fieldName>
+				</stackTrace>
+				<pattern>
+					<pattern>
+						{
+						"service": "${springAppName:-}",
+						"pid": "${PID:-}",
+						"thread": "%thread",
+						"class": "%logger{40}"
+						}
+					</pattern>
+				</pattern>
+			</providers>
 		</encoder>
 	</appender>
-	<logger name="jsonLogger" additivity="false" level="DEBUG">
-		<appender-ref ref="consoleAppender" />
-	</logger>
-	<root level="INFO">
+
+        <!-- root logger. update application.yml for service specific default log level -->
+	<root level="WARN">
 		<appender-ref ref="consoleAppender" />
 	</root>
 </configuration>
