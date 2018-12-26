@@ -39,7 +39,7 @@
 	</appender>
 
         <!-- root logger. update application.yml for service specific default log level -->
-	<root level="WARN">
+	<root level="INFO">
 		<appender-ref ref="consoleAppender" />
 	</root>
 </configuration>

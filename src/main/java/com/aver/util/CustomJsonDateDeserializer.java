@@ -15,8 +15,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
  */
 public class CustomJsonDateDeserializer extends JsonDeserializer<Date> {
     @Override
-    public Date deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+    public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         String date = jp.getText();
         try {

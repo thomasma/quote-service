@@ -15,9 +15,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 public class CustomJsonDateSerializer extends JsonSerializer<Date> {
     @Override
-    public void serialize(Date value, JsonGenerator jgen,
-            SerializerProvider provider) throws IOException,
-            JsonProcessingException {
+    public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider)
+            throws IOException, JsonProcessingException {
         DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         jgen.writeString(formatter.format(value));
     }

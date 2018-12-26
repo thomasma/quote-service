@@ -1,48 +1,52 @@
 package com.aver.notetaker.services.notes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.aver.notetaker.domain.Quote;
 import com.aver.notetaker.domain.Value;
+import com.aver.util.ApplicationProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class QuoteServiceImpl implements QuoteService {
-    protected final static Logger LOGGER = LoggerFactory
-            .getLogger(QuoteServiceImpl.class);
+
+    @Autowired
+    private ApplicationProperties appProperties;
+
+    private final RestTemplate restTemplate;
+
+    public QuoteServiceImpl(RestTemplate rest) {
+        this.restTemplate = rest;
+    }
 
     /**
-     * Call a 3rd party internet service to retrieve a random chuck norris joke.
-     * 
+     * Call an external service to retrieve a random joke.
+     *
      * @return a random quote
      */
-    @HystrixCommand(fallbackMethod = "fallbackQuoteService")
+    @HystrixCommand(fallbackMethod = "fallback")
     public Quote getRandomQuote() {
-        MDC.put("customfield", new Long(System.currentTimeMillis()).toString());
-        LOGGER.info("Getting a random quote");
+        log.info("Getting a random quote");
 
-        // put something into the context just for testing logback json
-        // additions of custom fields
-        RestTemplate restTemplate = new RestTemplate();
-        Quote quote = restTemplate
-                .getForObject(
-                        "http://api.icndb.com/jokes/random?firstName=Chuck&amp;lastName=Doe",
-                        Quote.class);
-        LOGGER.debug(quote.toString());
-        MDC.clear();
+        StringBuffer svcURL = new StringBuffer();
+        svcURL.append(appProperties.getQuoteSvcURI());
+        svcURL.append(appProperties.getQuoteSvcPath());
+        Quote quote = restTemplate.getForObject(svcURL.toString(), Quote.class);
         return quote;
     }
 
-    private Quote fallbackQuoteService() {
+    public Quote fallback() {
         Quote q = new Quote();
         q.setType("success");
         Value v = new Value();
         v.setId(1l);
-        v.setJoke("Chuck Norris is right now sleeping but has one eye open so don't party yet!");
+        v.setJoke("Chuck Norris is right now sleeping, but he can see you with both eyes closed...so behave!");
+        q.setValue(v);
         return q;
     }
 }

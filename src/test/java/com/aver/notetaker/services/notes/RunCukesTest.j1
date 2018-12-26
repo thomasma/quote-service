@@ -1,0 +1,31 @@
+package com.aver.notetaker.services.notes;
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import cucumber.api.junit.Cucumber;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features = { "classpath:com/aver/notetaker/services/notes" }, glue = { "com.aver.notetaker.services.notes" }, tags = { "~@ignored" })
+public class RunCukesTest {
+
+    @Given("^A request for a random chuck norris joke$")
+    public void searchforajoke() {
+        System.out.println("1");
+    }
+
+    @When("^Get a joke$")
+    public void getajoke() {
+        System.out.println("2");
+
+    }
+
+    @Then("^single joke is returned$")
+    public void assertSingleJokeResult(String results) {
+        System.out.println("3");
+    }
+
+}

@@ -2,6 +2,7 @@ target
 quote-service.log
 .project
 .gitignore
+.idea
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

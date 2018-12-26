@@ -1,10 +1,33 @@
 spring:
   application:
     name: quote-service
-    
----    
+  profiles:
+    active: "dev"
+  main:
+    banner-mode: "off"
+
+---
+
+spring:
+  profiles: dev
 server:
-  port: 5000
+  quoteSvcURI: http://api.icndb.com
+  quoteSvcPath: "/jokes/random?firstName=Dev&amp;lastName=Norris"
+  port: 80
+
+---
+
+spring:
+  profiles: test
+server:
+  quoteSvcURI: http://api.icndb.com
+  quoteSvcPath: "/jokesss/random?firstName=Test&amp;lastName=Norris"
+  port: 80
+
+---
+
+server:
+  port: 80
 
 ---
 # HTTP encoding
@@ -20,54 +43,21 @@ spring:
 spring:
   messages:
     basename: messages
-    cache-seconds: -1
+    cache-duration: 10m
     encoding: UTF-8
 
-#logging:
-#  config: /Users/mathew/temp/log4j2-spring.xml
-#  file: quote-service.log 
-#  level:     
-#    com.aver: DEBUG
-#  path: /Users/mathew/temp
-    
+
 logging:
    level:
      ROOT: INFO
      com.aver: DEBUG
+     org.springframework: INFO
      
 ---
-endpoints:
-  health:
-    enabled: true
-    sensitive: false
-  logfile:
-    enabled: true
-    path: /logfile
-    sensitive: false
-  metrics:
-    enabled: true
-    sensitive: false
-  info:
-    enabled: true
-    sensitive: false
-  sensitive: false
-    
----
-#turbine:
-#  stream:
-#    destination: metricqueue
-#    port: 8989
----
 
-health:
-  hystrix:
-    enabled: true
 
----
-#eureka:
-#  instance:
-#    hostname: localhost
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
-       
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,metrics,prometheus
