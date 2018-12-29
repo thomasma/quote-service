@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableCircuitBreaker
 public class Application {
-    
+
     @Bean
     public RestTemplate rest(RestTemplateBuilder builder) {
         return builder.build();

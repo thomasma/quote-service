@@ -21,7 +21,7 @@ spring:
   profiles: test
 server:
   quoteSvcURI: http://api.icndb.com
-  quoteSvcPath: "/jokesss/random?firstName=Test&amp;lastName=Norris"
+  quoteSvcPath: "/jokes/random?firstName=Test&amp;lastName=Norris"
   port: 80
 
 ---

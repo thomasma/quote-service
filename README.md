@@ -6,15 +6,22 @@
 
 Run this API application using
 
-    mvn spring-boot:run
+dev profile
+    
+    mvn clean spring-boot:run -Dspring.profiles.active=dev
+
+test profile
+    
+    mvn clean spring-boot:run -Dspring.profiles.active=test
+
 
 ### Get random quote
 
-    curl -XGET  http://localhost:5000/quotes/
+    curl -XGET  http://localhost/quotes/
 
 ## Actuator endpoint
 
-    curl http://localhost:5000/health 
-    curl http://localhost:5000/env
-    curl http://localhost:5000/info
-    curl http://localhost:5000/metrics
+    curl http://localhost/actuator/health
+    curl http://localhost/actuator/env
+    curl http://localhost/actuator/info
+    curl http://localhost/actuator/metrics
