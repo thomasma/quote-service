@@ -14,6 +14,11 @@ server:
   quoteSvcURI: http://api.icndb.com
   quoteSvcPath: "/jokes/random?firstName=Dev&amp;lastName=Norris"
   port: 80
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 ---
 
@@ -29,15 +34,6 @@ server:
 server:
   port: 80
 
----
-# HTTP encoding
-spring:
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-        
 ---
 # INTERNATIONALIZATION (MessageSourceAutoConfiguration)
 spring:
@@ -61,3 +57,24 @@ management:
     web:
       exposure:
         include: health,info,env,metrics,prometheus
+
+---
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+        recordExceptions:
+                - org.springframework.web.client.HttpServerErrorException
+                - java.util.concurrent.TimeoutException
+                - java.io.IOException
+    instances:
+      quoteService:
+        baseConfig: default

@@ -7,8 +7,8 @@ import org.springframework.web.client.RestTemplate;
 import com.aver.notetaker.domain.Quote;
 import com.aver.notetaker.domain.Value;
 import com.aver.util.ApplicationProperties;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -29,7 +29,7 @@ public class QuoteServiceImpl implements QuoteService {
      *
      * @return a random quote
      */
-    @HystrixCommand(fallbackMethod = "fallback")
+    @CircuitBreaker(name = "quoteService", fallbackMethod = "fallback")
     public Quote getRandomQuote() {
         log.info("Getting a random quote");
 
@@ -40,7 +40,14 @@ public class QuoteServiceImpl implements QuoteService {
         return quote;
     }
 
-    public Quote fallback() {
+    /**
+     * Fallback method in case there is an exception getting a joke from the
+     * remote service
+     * 
+     * @param e
+     * @return
+     */
+    public Quote fallback(Exception e) {
         Quote q = new Quote();
         q.setType("success");
         Value v = new Value();
