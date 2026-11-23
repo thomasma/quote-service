@@ -1,4 +1,4 @@
-package com.aver.notetaker.services.notes;
+package com.aver.quote.web;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -12,11 +12,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.aver.notetaker.domain.Quote;
-import com.aver.notetaker.domain.Value;
+import com.aver.quote.domain.Joke;
+import com.aver.quote.domain.Quote;
+import com.aver.quote.service.QuoteService;
 
-@WebMvcTest(QuoteServiceEndPoint.class)
-class QuoteServiceEndPointTest {
+@WebMvcTest(QuoteController.class)
+class QuoteControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -26,7 +27,7 @@ class QuoteServiceEndPointTest {
 
     @Test
     void returnsTheQuoteAsJson() throws Exception {
-        Value value = new Value();
+        Joke value = new Joke();
         value.setId("abc123");
         value.setJoke("a joke");
         Quote quote = new Quote();

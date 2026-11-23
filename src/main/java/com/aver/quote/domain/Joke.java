@@ -1,4 +1,4 @@
-package com.aver.notetaker.domain;
+package com.aver.quote.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -6,7 +6,9 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class Quote {
-    private String type;
-    private Value value;
+public class Joke {
+
+    private String id;
+    private String joke;
+
 }

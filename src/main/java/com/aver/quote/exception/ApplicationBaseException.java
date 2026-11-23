@@ -1,4 +1,4 @@
-package com.aver.notetaker.services.exception;
+package com.aver.quote.exception;
 
 import java.util.ArrayList;
 import java.util.List;

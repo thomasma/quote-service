@@ -1,4 +1,4 @@
-package com.aver.util;
+package com.aver.quote.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ public class RestClientConfig {
      * quote.read-timeout.
      */
     @Bean
-    public RestTemplate rest(RestTemplateBuilder builder, ApplicationProperties properties) {
+    public RestTemplate rest(RestTemplateBuilder builder, QuoteProperties properties) {
         return builder.connectTimeout(properties.getConnectTimeout()).readTimeout(properties.getReadTimeout())
                 .build();
     }
