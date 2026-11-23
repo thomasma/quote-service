@@ -9,10 +9,12 @@ spring:
 ---
 
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
 server:
   quoteSvcURI: http://api.icndb.com
-  quoteSvcPath: "/jokes/random?firstName=Dev&amp;lastName=Norris"
+  quoteSvcPath: "/jokes/random?firstName=Dev&lastName=Norris"
   port: 80
   servlet:
     encoding:
@@ -23,10 +25,12 @@ server:
 ---
 
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
 server:
   quoteSvcURI: http://api.icndb.com
-  quoteSvcPath: "/jokes/random?firstName=Test&amp;lastName=Norris"
+  quoteSvcPath: "/jokes/random?firstName=Test&lastName=Norris"
   port: 80
 
 ---
