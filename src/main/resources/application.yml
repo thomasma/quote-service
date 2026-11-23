@@ -1,68 +1,38 @@
 spring:
   application:
     name: quote-service
-  profiles:
-    active: "dev"
   main:
     banner-mode: "off"
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: dev
-server:
-  quoteSvcURI: https://api.chucknorris.io
-  quoteSvcPath: "/jokes/random"
-  port: 80
-  servlet:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: test
-server:
-  quoteSvcURI: https://api.chucknorris.io
-  quoteSvcPath: "/jokes/random"
-  port: 80
-
----
-
-server:
-  port: 80
-
----
-# INTERNATIONALIZATION (MessageSourceAutoConfiguration)
-spring:
+  # INTERNATIONALIZATION (MessageSourceAutoConfiguration)
   messages:
     basename: messages
     cache-duration: 10m
     encoding: UTF-8
 
+server:
+  # 8080 by default (80 needs elevated privileges); override with the PORT environment variable
+  port: ${PORT:8080}
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  quoteSvcURI: https://api.chucknorris.io
+  quoteSvcPath: "/jokes/random"
 
 logging:
-   level:
-     ROOT: INFO
-     com.aver: DEBUG
-     org.springframework: INFO
-     
----
-
+  level:
+    ROOT: INFO
+    com.aver: DEBUG
+    org.springframework: INFO
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,env,metrics,prometheus
+        # env is deliberately not exposed: it lists configuration and has no authentication
+        include: health,info,metrics,prometheus
 
----
 resilience4j:
   circuitbreaker:
     configs:
@@ -78,7 +48,7 @@ resilience4j:
         # RestTemplate wraps connection failures and timeouts in ResourceAccessException and
         # HTTP errors in HttpStatusCodeException, both subclasses of RestClientException
         recordExceptions:
-                - org.springframework.web.client.RestClientException
+          - org.springframework.web.client.RestClientException
     instances:
       quoteService:
         baseConfig: default

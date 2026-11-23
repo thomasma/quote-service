@@ -1,27 +1,29 @@
 # Spring Boot App that retrieves a random quote service RESTful service
 
-*thanks to jokes from http://api.icndb.com*
+*thanks to jokes from https://api.chucknorris.io*
 
-*Pre-Requsites (do this only once and only if interested in running this sample using Spring Cloud...otherwise ignore this section)*
+Requires Java 17 or later.
 
-Run this API application using
+## Run
 
-dev profile
-    
-    mvn clean spring-boot:run -Dspring.profiles.active=dev
+    mvn clean spring-boot:run
 
-test profile
-    
-    mvn clean spring-boot:run -Dspring.profiles.active=test
+The service listens on port 8080. Set the `PORT` environment variable to use another port.
 
+If the joke API is unreachable, slow, or returns an error, the service answers with a fixed fallback joke instead.
+A circuit breaker stops calling the joke API after repeated failures.
 
 ### Get random quote
 
-    curl -XGET  http://localhost/quotes/
+    curl -XGET http://localhost:8080/quotes/
 
-## Actuator endpoint
+## Actuator endpoints
 
-    curl http://localhost/actuator/health
-    curl http://localhost/actuator/env
-    curl http://localhost/actuator/info
-    curl http://localhost/actuator/metrics
+    curl http://localhost:8080/actuator/health
+    curl http://localhost:8080/actuator/info
+    curl http://localhost:8080/actuator/metrics
+    curl http://localhost:8080/actuator/prometheus
+
+## Tests
+
+    mvn test
