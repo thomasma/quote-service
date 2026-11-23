@@ -2,7 +2,7 @@
 
 *thanks to jokes from https://api.chucknorris.io*
 
-Requires Java 17 or later.
+Requires Java 21 or later.
 
 ## Run
 
