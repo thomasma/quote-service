@@ -1,12 +1,24 @@
 {"properties": [
   {
-    "name": "server.quoteSvcURI",
+    "name": "quote.service-uri",
     "type": "java.lang.String",
-    "description": "A description for 'server.quoteSvcURI'"
+    "description": "Base URI of the upstream joke service, e.g. https://api.chucknorris.io."
   },
   {
-    "name": "server.quoteSvcPath",
+    "name": "quote.service-path",
     "type": "java.lang.String",
-    "description": "A description for 'server.quoteSvcPath'"
+    "description": "Path of the random joke endpoint on the upstream service."
+  },
+  {
+    "name": "quote.connect-timeout",
+    "type": "java.time.Duration",
+    "description": "How long to wait to connect to the upstream service.",
+    "defaultValue": "2s"
+  },
+  {
+    "name": "quote.read-timeout",
+    "type": "java.time.Duration",
+    "description": "How long to wait for the upstream service to respond.",
+    "defaultValue": "3s"
   }
 ]}

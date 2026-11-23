@@ -1,6 +1,5 @@
 package com.aver.notetaker.services.notes;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -17,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class QuoteServiceImpl implements QuoteService {
 
-    @Autowired
-    private ApplicationProperties appProperties;
+    private final ApplicationProperties appProperties;
 
     private final RestTemplate restTemplate;
 
-    public QuoteServiceImpl(RestTemplate rest) {
+    public QuoteServiceImpl(RestTemplate rest, ApplicationProperties appProperties) {
         this.restTemplate = rest;
+        this.appProperties = appProperties;
     }
 
     /**
@@ -35,10 +34,8 @@ public class QuoteServiceImpl implements QuoteService {
     public Quote getRandomQuote() {
         log.info("Getting a random quote");
 
-        StringBuffer svcURL = new StringBuffer();
-        svcURL.append(appProperties.getQuoteSvcURI());
-        svcURL.append(appProperties.getQuoteSvcPath());
-        UpstreamJoke joke = restTemplate.getForObject(svcURL.toString(), UpstreamJoke.class);
+        String svcURL = appProperties.getServiceUri() + appProperties.getServicePath();
+        UpstreamJoke joke = restTemplate.getForObject(svcURL, UpstreamJoke.class);
         if (joke == null) {
             // counted as a failure by the circuit breaker, and served by the fallback
             throw new RestClientException("Empty response from the quote service");
