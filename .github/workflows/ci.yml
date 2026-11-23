@@ -15,8 +15,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # 17 is the minimum the project targets; 21 and 25 are current LTS releases
-        java: [17, 21, 25]
+        # 21 is the minimum the project targets; 25 is the latest LTS release
+        java: [21, 25]
     steps:
       - uses: actions/checkout@v7
 
