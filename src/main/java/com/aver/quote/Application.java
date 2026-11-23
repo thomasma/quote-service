@@ -1,4 +1,4 @@
-package com.aver;
+package com.aver.quote;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

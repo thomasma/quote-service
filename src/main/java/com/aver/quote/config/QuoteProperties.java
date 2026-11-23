@@ -1,4 +1,4 @@
-package com.aver.util;
+package com.aver.quote.config;
 
 import java.time.Duration;
 
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @Component
 @ConfigurationProperties("quote")
-public class ApplicationProperties {
+public class QuoteProperties {
 
     /** Base URI of the upstream joke service, e.g. https://api.chucknorris.io */
     private String serviceUri;

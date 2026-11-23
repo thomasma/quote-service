@@ -1,4 +1,4 @@
-package com.aver.notetaker.services.notes;
+package com.aver.quote.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.ExpectedCount.times;
@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-import com.aver.notetaker.domain.Quote;
+import com.aver.quote.domain.Quote;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;

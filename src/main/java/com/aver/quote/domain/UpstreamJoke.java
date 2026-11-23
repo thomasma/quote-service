@@ -1,4 +1,4 @@
-package com.aver.notetaker.domain;
+package com.aver.quote.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
