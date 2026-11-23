@@ -62,6 +62,7 @@ public class QuoteServiceImpl implements QuoteService {
         log.warn("Quote service call failed, returning the fallback quote: {}", e.toString());
         Quote q = new Quote();
         q.setType("success");
+        q.setFallback(true);
         Joke v = new Joke();
         v.setId("1");
         v.setJoke("Chuck Norris is right now sleeping, but he can see you with both eyes closed...so behave!");

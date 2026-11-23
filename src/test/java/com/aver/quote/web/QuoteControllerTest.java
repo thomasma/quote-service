@@ -3,6 +3,7 @@ package com.aver.quote.web;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,7 +40,28 @@ class QuoteControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.type").value("success"))
                 .andExpect(jsonPath("$.value.id").value("abc123"))
-                .andExpect(jsonPath("$.value.joke").value("a joke"));
+                .andExpect(jsonPath("$.value.joke").value("a joke"))
+                .andExpect(header().doesNotExist("X-Fallback"))
+                .andExpect(jsonPath("$.fallback").doesNotExist());
+    }
+
+    @Test
+    void marksAFallbackQuoteWithAHeaderAndLeavesTheBodyUnchanged() throws Exception {
+        Joke value = new Joke();
+        value.setId("1");
+        value.setJoke("a canned joke");
+        Quote quote = new Quote();
+        quote.setType("success");
+        quote.setValue(value);
+        quote.setFallback(true);
+        when(quoteService.getRandomQuote()).thenReturn(quote);
+
+        mockMvc.perform(get("/quotes/"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("X-Fallback", "true"))
+                .andExpect(jsonPath("$.type").value("success"))
+                .andExpect(jsonPath("$.value.joke").value("a canned joke"))
+                .andExpect(jsonPath("$.fallback").doesNotExist());
     }
 
     @Test
