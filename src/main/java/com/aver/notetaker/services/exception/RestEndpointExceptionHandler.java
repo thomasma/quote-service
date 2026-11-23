@@ -3,7 +3,6 @@ package com.aver.notetaker.services.exception;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,7 +38,7 @@ public class RestEndpointExceptionHandler {
 
         // if list is empty and a single error code was specified, then process
         // that one
-        if (errors.isEmpty() && StringUtils.isNotEmpty(ex.getMessage())) {
+        if (errors.isEmpty() && StringUtils.hasLength(ex.getMessage())) {
             errors.add(new ErrorBean(ex.getMessage()));
         }
 
