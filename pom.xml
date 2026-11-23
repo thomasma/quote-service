@@ -67,28 +67,19 @@
 			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
 
-		<!-- logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
+		<!-- logging: JSON output (slf4j and logback come with the Boot starters) -->
 		<dependency>
 			<groupId>net.logstash.logback</groupId>
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>8.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-		</dependency>
-
+		<!-- metrics: /actuator/prometheus -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
-		
+
 		<!-- other -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -118,70 +109,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>.ebextensions</directory>
-							<targetPath>.ebextensions</targetPath>
-							<filtering>true</filtering>
-						</resource>
-						<resource>
-							<directory>.elasticbeanstalk</directory>
-							<targetPath>.elasticbeanstalk</targetPath>
-							<filtering>true</filtering>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<id>prepare</id>
-						<phase>package</phase>
-						<configuration>
-							<tasks>
-								<unzip
-									src="${project.build.directory}/${project.build.finalName}.jar"
-									dest="${project.build.directory}/${project.build.finalName}" />
-								<copy
-									todir="${project.build.directory}/${project.build.finalName}/"
-									overwrite="false">
-									<fileset dir="./" includes=".ebextensions/**" />
-								</copy>
-								<copy
-									todir="${project.build.directory}/${project.build.finalName}/"
-									overwrite="false">
-									<fileset dir="./" includes=".elasticbeanstalk/**" />
-								</copy>
-								<zip compress="false"
-									destfile="${project.build.directory}/${project.build.finalName}.jar"
-									basedir="${project.build.directory}/${project.build.finalName}" />
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 </project>
