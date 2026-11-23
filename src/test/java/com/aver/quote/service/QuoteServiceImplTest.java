@@ -75,6 +75,7 @@ class QuoteServiceImplTest {
         assertThat(quote.getType()).isEqualTo("success");
         assertThat(quote.getValue().getId()).isEqualTo("abc123");
         assertThat(quote.getValue().getJoke()).isEqualTo("a real joke");
+        assertThat(quote.isFallback()).isFalse();
         upstream.verify();
     }
 
@@ -85,6 +86,7 @@ class QuoteServiceImplTest {
         Quote quote = quoteService.getRandomQuote();
 
         assertThat(quote.getValue().getId()).isEqualTo("1");
+        assertThat(quote.isFallback()).isTrue();
         upstream.verify();
     }
 
@@ -97,6 +99,7 @@ class QuoteServiceImplTest {
         Quote quote = quoteService.getRandomQuote();
 
         assertThat(quote.getValue().getId()).isEqualTo("1");
+        assertThat(quote.isFallback()).isTrue();
     }
 
     @Test
@@ -106,6 +109,7 @@ class QuoteServiceImplTest {
         Quote quote = quoteService.getRandomQuote();
 
         assertThat(quote.getValue().getId()).isEqualTo("1");
+        assertThat(quote.isFallback()).isTrue();
     }
 
     @Test
@@ -123,6 +127,7 @@ class QuoteServiceImplTest {
         Quote quote = quoteService.getRandomQuote();
 
         assertThat(quote.getValue().getId()).isEqualTo("1");
+        assertThat(quote.isFallback()).isTrue();
         upstream.verify();
     }
 }

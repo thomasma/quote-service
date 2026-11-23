@@ -13,6 +13,9 @@ The service listens on port 8080. Set the `PORT` environment variable to use ano
 If the joke API is unreachable, slow, or returns an error, the service answers with a fixed fallback joke instead.
 A circuit breaker stops calling the joke API after repeated failures.
 
+A fallback response has the same JSON body as a real one but carries the response header `X-Fallback: true`.
+Real jokes do not have the header.
+
 ## Configuration
 
 | Property | Environment variable | Default |
