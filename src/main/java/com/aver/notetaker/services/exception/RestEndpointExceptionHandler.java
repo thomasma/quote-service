@@ -16,9 +16,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Extends ResponseEntityExceptionHandler so that Spring MVC's own errors (unknown path, unsupported method,
+ * bad request and so on) keep their proper 4xx status. The catch-all handler below would otherwise turn them
+ * into a 500.
+ */
 @ControllerAdvice
-public class RestEndpointExceptionHandler {
+public class RestEndpointExceptionHandler extends ResponseEntityExceptionHandler {
     protected final static Logger LOGGER = LoggerFactory.getLogger(RestEndpointExceptionHandler.class);
 
     @Autowired
