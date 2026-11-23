@@ -13,6 +13,16 @@ The service listens on port 8080. Set the `PORT` environment variable to use ano
 If the joke API is unreachable, slow, or returns an error, the service answers with a fixed fallback joke instead.
 A circuit breaker stops calling the joke API after repeated failures.
 
+## Configuration
+
+| Property | Environment variable | Default |
+|---|---|---|
+| `server.port` | `PORT` | `8080` |
+| `quote.service-uri` | `QUOTE_SERVICEURI` | `https://api.chucknorris.io` |
+| `quote.service-path` | `QUOTE_SERVICEPATH` | `/jokes/random` |
+| `quote.connect-timeout` | `QUOTE_CONNECTTIMEOUT` | `2s` |
+| `quote.read-timeout` | `QUOTE_READTIMEOUT` | `3s` |
+
 ### Get random quote
 
     curl -XGET http://localhost:8080/quotes/

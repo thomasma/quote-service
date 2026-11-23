@@ -28,8 +28,8 @@ class QuoteServiceTimeoutTest {
 
     @DynamicPropertySource
     static void upstreamProperties(DynamicPropertyRegistry registry) {
-        registry.add("server.quoteSvcURI", () -> "http://localhost:" + SLOW_UPSTREAM.getAddress().getPort());
-        registry.add("server.quoteSvcPath", () -> "/jokes/random");
+        registry.add("quote.service-uri", () -> "http://localhost:" + SLOW_UPSTREAM.getAddress().getPort());
+        registry.add("quote.service-path", () -> "/jokes/random");
     }
 
     @Autowired

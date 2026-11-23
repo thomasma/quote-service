@@ -17,8 +17,13 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-  quoteSvcURI: https://api.chucknorris.io
-  quoteSvcPath: "/jokes/random"
+
+quote:
+  # the upstream joke service
+  service-uri: https://api.chucknorris.io
+  service-path: /jokes/random
+  connect-timeout: 2s
+  read-timeout: 3s
 
 logging:
   level:

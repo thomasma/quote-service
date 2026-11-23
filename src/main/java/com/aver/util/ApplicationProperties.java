@@ -1,17 +1,29 @@
 package com.aver.util;
 
+import java.time.Duration;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
-import lombok.ToString;
 
+/**
+ * Settings for the upstream joke service, bound from the {@code quote.*} properties.
+ */
 @Data
 @Component
-@ConfigurationProperties("server")
-@ToString
+@ConfigurationProperties("quote")
 public class ApplicationProperties {
-    private String name;
-    private String quoteSvcPath;
-    private String quoteSvcURI;
+
+    /** Base URI of the upstream joke service, e.g. https://api.chucknorris.io */
+    private String serviceUri;
+
+    /** Path of the random joke endpoint on the upstream service. */
+    private String servicePath;
+
+    /** How long to wait to connect to the upstream service. */
+    private Duration connectTimeout = Duration.ofSeconds(2);
+
+    /** How long to wait for the upstream service to respond. */
+    private Duration readTimeout = Duration.ofSeconds(3);
 }
