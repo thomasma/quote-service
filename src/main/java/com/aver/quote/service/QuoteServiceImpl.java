@@ -1,8 +1,8 @@
 package com.aver.quote.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import com.aver.quote.config.QuoteProperties;
 import com.aver.quote.domain.Joke;
@@ -18,10 +18,10 @@ public class QuoteServiceImpl implements QuoteService {
 
     private final QuoteProperties appProperties;
 
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
 
-    public QuoteServiceImpl(RestTemplate rest, QuoteProperties appProperties) {
-        this.restTemplate = rest;
+    public QuoteServiceImpl(RestClient restClient, QuoteProperties appProperties) {
+        this.restClient = restClient;
         this.appProperties = appProperties;
     }
 
@@ -35,7 +35,7 @@ public class QuoteServiceImpl implements QuoteService {
         log.info("Getting a random quote");
 
         String svcURL = appProperties.getServiceUri() + appProperties.getServicePath();
-        UpstreamJoke joke = restTemplate.getForObject(svcURL, UpstreamJoke.class);
+        UpstreamJoke joke = restClient.get().uri(svcURL).retrieve().body(UpstreamJoke.class);
         if (joke == null) {
             // counted as a failure by the circuit breaker, and served by the fallback
             throw new RestClientException("Empty response from the quote service");

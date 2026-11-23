@@ -11,10 +11,12 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.restclient.test.MockServerRestClientCustomizer;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
-import org.springframework.web.client.RestTemplate;
 
 import com.aver.quote.domain.Quote;
 
@@ -32,11 +34,24 @@ class QuoteServiceImplTest {
     private static final String UPSTREAM_URL = "https://api.chucknorris.io/jokes/random";
     private static final String UPSTREAM_JSON = "{\"id\":\"abc123\",\"value\":\"a real joke\",\"url\":\"ignored\"}";
 
+    /**
+     * Binds a mock server to the application's RestClient. It is a customizer without an order, so it is applied
+     * after the one that sets the timeouts, and its mock request factory wins.
+     */
+    @TestConfiguration
+    static class MockUpstreamConfig {
+
+        @Bean
+        MockServerRestClientCustomizer mockServerRestClientCustomizer() {
+            return new MockServerRestClientCustomizer();
+        }
+    }
+
     @Autowired
     private QuoteService quoteService;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private MockServerRestClientCustomizer mockServer;
 
     @Autowired
     private CircuitBreakerRegistry circuitBreakerRegistry;
@@ -45,7 +60,8 @@ class QuoteServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        upstream = MockRestServiceServer.bindTo(restTemplate).build();
+        upstream = mockServer.getServer();
+        upstream.reset();
         circuitBreakerRegistry.circuitBreaker("quoteService").reset();
     }
 
