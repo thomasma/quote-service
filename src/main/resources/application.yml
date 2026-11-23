@@ -13,8 +13,8 @@ spring:
     activate:
       on-profile: dev
 server:
-  quoteSvcURI: http://api.icndb.com
-  quoteSvcPath: "/jokes/random?firstName=Dev&lastName=Norris"
+  quoteSvcURI: https://api.chucknorris.io
+  quoteSvcPath: "/jokes/random"
   port: 80
   servlet:
     encoding:
@@ -29,8 +29,8 @@ spring:
     activate:
       on-profile: test
 server:
-  quoteSvcURI: http://api.icndb.com
-  quoteSvcPath: "/jokes/random?firstName=Test&lastName=Norris"
+  quoteSvcURI: https://api.chucknorris.io
+  quoteSvcPath: "/jokes/random"
   port: 80
 
 ---
