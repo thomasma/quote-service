@@ -2,6 +2,7 @@ package com.aver.notetaker.services.notes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.aver.notetaker.domain.Quote;
@@ -38,6 +39,10 @@ public class QuoteServiceImpl implements QuoteService {
         svcURL.append(appProperties.getQuoteSvcURI());
         svcURL.append(appProperties.getQuoteSvcPath());
         UpstreamJoke joke = restTemplate.getForObject(svcURL.toString(), UpstreamJoke.class);
+        if (joke == null) {
+            // counted as a failure by the circuit breaker, and served by the fallback
+            throw new RestClientException("Empty response from the quote service");
+        }
 
         Value value = new Value();
         value.setId(joke.getId());
@@ -56,6 +61,8 @@ public class QuoteServiceImpl implements QuoteService {
      * @return
      */
     public Quote fallback(Exception e) {
+        // no stack trace: while the circuit is open this runs on every request
+        log.warn("Quote service call failed, returning the fallback quote: {}", e.toString());
         Quote q = new Quote();
         q.setType("success");
         Value v = new Value();
