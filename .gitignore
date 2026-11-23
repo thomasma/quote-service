@@ -1,10 +1,10 @@
 target
 quote-service.log
-.project
 .gitignore
 .idea
 
-#
+# Eclipse
+.project
+.classpath
+.settings/
 .factorypath
-.settings/org.eclipse.jdt.apt.core.prefs
-.settings/org.springframework.ide.eclipse.prefs
