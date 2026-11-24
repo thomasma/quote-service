@@ -50,7 +50,7 @@ resilience4j:
         waitDurationInOpenState: 5s
         failureRateThreshold: 50
         eventConsumerBufferSize: 10
-        # RestTemplate wraps connection failures and timeouts in ResourceAccessException and
+        # RestClient wraps connection failures and timeouts in ResourceAccessException and
         # HTTP errors in HttpStatusCodeException, both subclasses of RestClientException
         recordExceptions:
           - org.springframework.web.client.RestClientException
