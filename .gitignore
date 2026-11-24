@@ -2,6 +2,7 @@ target
 quote-service.log
 .gitignore
 .idea
+.vscode/
 
 # Eclipse
 .project
