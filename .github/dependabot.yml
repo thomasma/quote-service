@@ -1,0 +1,24 @@
+version: 2
+
+updates:
+  # Maven dependencies, the Spring Boot parent and the Spring Cloud BOM
+  - package-ecosystem: maven
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # Spring Boot and Spring Cloud versions have to move together (each Spring Cloud release is built
+      # for one Boot version), so they arrive in a single pull request instead of failing CI separately.
+      spring:
+        patterns:
+          - "org.springframework*"
+
+  # The actions used by .github/workflows/ci.yml
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
