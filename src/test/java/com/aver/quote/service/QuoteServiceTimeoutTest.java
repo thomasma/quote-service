@@ -16,7 +16,7 @@ import com.aver.quote.domain.Quote;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * Uses a real, deliberately slow HTTP server to prove that the RestTemplate
+ * Uses a real, deliberately slow HTTP server to prove that the RestClient
  * read timeout is applied: without it the call would block for the full 5 seconds.
  */
 @SpringBootTest(properties = { "quote.read-timeout=300ms", "quote.connect-timeout=300ms" })
