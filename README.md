@@ -33,7 +33,7 @@ The body has the same shape as a real one. The only difference is the response h
     HTTP/1.1 200
     X-Fallback: true
 
-The upstream call has a 2s connect timeout and a 3s read timeout. A circuit breaker watches the last 10 calls: once at least 5 have been made and half of them failed, it stops calling the joke API for 5s and serves the fallback directly. It then lets 3 trial calls through before closing again.
+The upstream call has a 2s connect timeout and a 3s read timeout. A circuit breaker stops calling the joke API after repeated failures and serves the fallback directly. After a short wait it lets a few trial calls through before closing again. The thresholds are under `resilience4j` in `application.yml`.
 
 ## Configuration
 
